@@ -1,3 +1,3 @@
 # Memo
 
-Just Memo
+放一些备忘录和随笔吧
