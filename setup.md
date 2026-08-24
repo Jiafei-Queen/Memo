@@ -103,8 +103,8 @@ if has('gui_running')
         " macOS     - set guifontwide=Noto\ Sans\ Mono\ CJK\ SC:h12
     endif
 
-    set lines=40
-    set columns=80
+    set lines=50
+    set columns=100
 endif
 
 ```
@@ -486,6 +486,14 @@ return config
   "editor.fontLigatures": false   // 取消连字
 }
 ```
+
+### 在终端禁用编辑器快捷键
+```json
+{
+    "terminal.integrated.sendKeybindingsToShell": true
+}
+```
+
 
 ## 跨平台应用
 
