@@ -109,6 +109,16 @@ endif
 ```
 
 然后打开 Vim，输入 `:PlugInstall` 就行
+## 相关环境变量
+```sh
+gvim() {
+  start gvim "$@"
+}
+
+compdef _files gvim -- Zsh
+export EDITOR="vim"
+export VISUAL="vim"
+```
 
 # Z Shell
 ### 1. 安装 Oh My Zsh
