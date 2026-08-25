@@ -16,7 +16,6 @@
   - Unicode UTF-8
   - 关闭 Shift 切换输入法
   - 关闭 Defender
-  - 安装 uutils/coreutils
 - Wezterm
 - VSCode
 - 跨平台应用
@@ -346,13 +345,6 @@ Get-Service sshd
 “设置” -> “时间与语言” -> “语言” --> “首选语言” --> 点击“中文（简体，中国）” --> 点击弹出的“选项” --> “键盘” --> 点击“微软拼音” --> 点击弹出的“选项” --> “按键” --> 关闭！
 
 ## 关闭 Defender（不赘述）
-
-## 安装 uutils/coreutils
-
-```bash
-scoop install uutils-coreutils
-export PATH="$HOME/scoop/shims:$PATH"
-```
 
 ## WezTerm
 ### 安装 Nightly！
