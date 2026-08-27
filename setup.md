@@ -7,6 +7,7 @@
 - Linux
   - Linux配置Spice Agent
   - Linux桥接网卡配置
+  - tmux 配置
 - Windows
   - Windows Powershell 编码
   - Windows 脚本执行策略更改
@@ -144,6 +145,22 @@ else
 fi
 ```
 
+### 安装 `zsh-vi-mode`
+
+```bash
+# 克隆仓库
+git clone https://github.com/jeffreytse/zsh-vi-mode \
+  $ZSH_CUSTOM/plugins/zsh-vi-mode
+
+# 添加插件
+plugins+=(zsh-vi-mode)
+
+# 设置输入模式光标为方块
+function zvm_config() {
+  ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_BLOCK
+}
+```
+
 # Linux — 是世界上最强的操作系统，没有之一
 
 ## Linux配置Spice Agent
@@ -259,6 +276,18 @@ nmcli connection up br0
 systemctl restart NetworkManager
 ```
 > 如果有VPN请关闭（需要刷新DNS）
+
+## tmux
+
+> 编辑 `~/.tmux.conf`
+
+```
+set -g mouse on
+set-window-option -g mode-keys vi
+bind-key -T copy-mode-vi v send-keys -X begin-selection
+bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
+bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
+```
 
 # Windows — 难评，总之我不喜欢
 
