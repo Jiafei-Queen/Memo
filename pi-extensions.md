@@ -46,28 +46,16 @@ pi install npm:pi-subagents
 
 ---
 
-### 五、TPS 检测
+### 五、状态监测
 
 ```bash
-pi install npm:pi-token-speed
+pi install npm:pi-turn-metrics
 ```
 
-用滑动窗口测 tokens per second，结果通过 `ctx.ui.setStatus("tokenSpeed", ...)` 写进状态栏。
-
-`settings.json` 里的 `tokenSpeed` 段控制它的行为：
-
-```jsonc
-"tokenSpeed": {
-  "display": "stats",          // 状态栏显示形态
-  "useProviderTokens": true,   // 优先用 provider 上报的 token 数，而非本地估算
-  "countStrategy": "estimate",
-  "endTpsBehavior": "average", // 生成结束后的收尾显示
-  "icon": "⚡",
-  "updateInterval": 200,
-  "slidingWindow": 1000
-}
+格式类似：
 ```
-
+1 turns · 1 steps | LLM 2.9s | TTFT avg 1.9s · 147 tok/s
+```
 ---
 
 ### 六、API 剩余金额
@@ -142,32 +130,47 @@ Powerline 风格状态栏，接管 footer（实际上是接管编辑器的上边
 写在 `settings.json` 的 `powerline` 段：
 
 ```jsonc
-"powerline": {
-  "preset": "default",
-  "model": { "showThinkingLevel": true, "display": "name" },
-  "context": { "format": "full" },
-  "cache_read": { "format": "percent" },
-  "layout": {
-    "left":  ["model", "git"],
-    "right": ["context_pct", "cache_read", "cost", "custom:usage", "custom:tps"],
-    "secondary": []
-  },
-  "customItems": [
-    { "id": "usage", "statusKey": "usage",      "prefix": "quota", "color": "dim" },
-    { "id": "tps",   "statusKey": "tokenSpeed", "color": "dim" }
-  ]
-}
+  "powerline": {
+    "preset": "default",
+    "model": {
+      "showThinkingLevel": true,
+      "display": "name"
+    },
+    "context": {
+      "format": "full"
+    },
+    "cache_read": {
+      "format": "percent"
+    },
+    "layout": {
+      "left": [
+        "model"
+      ],
+      "right": [
+        "context_pct",
+        "custom:usage"
+      ],
+      "secondary": [
+        "custom:turn"
+      ]
+    },
+    "customItems": [
+      {
+        "id": "turn",
+        "statusKey": "turn-metrics",
+        "position": "right",
+        "selfColorize": true,
+        "hideWhenMissing": true
+      },
+      {
+        "id": "usage",
+        "statusKey": "usage",
+        "color": "dim"
+      }
+    ]
+  }
 ```
 
-#### 每一处为什么这么配
-
-- **`layout.secondary: []`** —— 这一条是「简洁」的关键。默认预设会把 `extension_statuses` 放在第二行，把你所有扩展的状态原样堆出来。清空后就只剩一行。后果是**静态状态全部不再显示**（`mcp: 3 servers enabled`、`exa: 1 key`、`langfuse ✓` 这类永远不变的信息）。
-- **`path` 段已移除** —— 工作目录在终端标题里、`pwd` 一敲就有，不值得占 footer 宽度。
-- **`context.format: "full"`** —— 显示成 `已用/总` 的形式（`12k/200k`）。另一种取值 `"percent"` 只显示裸百分比。注意 `full` 里括号中的 `(6.2%)` 是**硬编码**的，配置去不掉；`AC` 是 auto-compact 指示符，只在开启自动压缩时出现。
-- **`cache_read.format: "percent"`** —— 显示缓存命中率。计算口径是 `cacheRead / (input + cacheRead)`，四舍五入不留小数。另外两档：`"tokens"`（只显示原始 token 量）、`"both"`（两者都要，形如 `cache in: 7.1M (84%)`）。**无缓存活动时该段输出空串，完全不占宽度**，所以会话初期不会白占位。
-- **`model.showThinkingLevel: true`** —— 把思考档位并进 model 段，省下一个独立 `thinking` 段和一个分隔符。
-- **`customItems`** —— 把 `usage`（配额）和 `tokenSpeed`（实时速度）从聚合状态行提升为独立项，变成能上主行的正常段。`prefix` 是在状态原文前面加的字（`usage` 的原文是 `minimax cn 0% 5h 83% wk`，加 `quota` 前缀才好辨认）；`color: "dim"` 是把它们自带的 ANSI 颜色统一压成暗色，视觉上不抢戏。
-  - 有个机制值得知道：`customItems` 的 `excludeFromExtensionStatuses` **默认就是 `true`**，也就是一旦声明了某项，它会自动从聚合行里剔除。
 
 #### ASCII 集 vs. 图标
 
