@@ -28,19 +28,15 @@ docker run -d \
   --name open-webui \
   --restart always \
   --network open-webui-net \
+  --memory 1400m \
   -e RAG_EMBEDDING_ENGINE=openai \
   -e AUDIO_STT_ENGINE=webapi \
   -e DATABASE_POOL_SIZE=8 \
   -e DATABASE_SQLITE_PRAGMA_CACHE_SIZE=-2000 \
   -e DATABASE_SQLITE_PRAGMA_MMAP_SIZE=0 \
-  -e DATABASE_ENABLE_SESSION_SHARING=false \
   -e ENABLE_AUTOCOMPLETE_GENERATION=false \
-  -e ENABLE_IMAGE_GENERATION=false \
   -e ENABLE_IMAGE_PROMPT_GENERATION=false \
-  -e CHAT_RESPONSE_STREAM_DELTA_CHUNK_SIZE=10 \
-  -e GLOBAL_LOG_LEVEL=WARNING \
   -e ENABLE_COMPRESSION_MIDDLEWARE=false \
-  -e UVICORN_WS_PER_MESSAGE_DEFLATE=false \
   -e ENABLE_RAG_LOCAL_WEB_FETCH=true \
   ghcr.m.daocloud.io/open-webui/open-webui:main
 ```
