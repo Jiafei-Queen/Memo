@@ -283,10 +283,22 @@ systemctl restart NetworkManager
 
 ```
 set -g mouse on
+set -g extended-keys on
+set -g extended-keys-format csi-u
+
+# 开启复制模式下的 vi 键位
 set-window-option -g mode-keys vi
+
+# 映射 v 为开始选择（Visual 模式）
 bind-key -T copy-mode-vi v send-keys -X begin-selection
+
+# 映射 y 为复制并退出复制模式（Yank）
 bind-key -T copy-mode-vi y send-keys -X copy-selection-and-cancel
+
+# 映射 C-v 为矩形块选（Visual Block）
 bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
+
+set -gq allow-passthrough on
 ```
 
 # Windows — 难评，总之我不喜欢

@@ -217,11 +217,6 @@ pi install npm:pi-mcp-adapter
       "command": "open-computer-use",
       "args": ["mcp"],
       "directTools": true       // true = 工具直接暴露为原生工具
-    },
-    "context-mode": {
-      "command": "context-mode",
-      "args": [],
-      "directTools": false
     }
   }
 }
@@ -238,10 +233,7 @@ pi install npm:pi-mcp-adapter
 # 1. 安装 MCP
 npm install -g context-mode
 
-# 2. 为 `~/.pi/agent/mcp.json` 添加：
-# "context-mode": { "command": "context-mode" }
-
-# 3. 安装拓展
+# 2. 安装拓展
 pi install npm:context-mode
 ```
 
