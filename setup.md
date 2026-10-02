@@ -526,7 +526,10 @@ return config
   "editor.fontSize": 14,
   "editor.fontWeight": "normal",
   "editor.fontFamily": "'JetBrains Mono', 'Noto Sans Mono CJK SC', monospace",
-  "editor.fontLigatures": false   // 取消连字
+  "editor.fontLigatures": false,   // 取消连字
+
+  "terminal.integrated.accessibleViewFocusOnCommandExecution": false,
+  "terminal.integrated.fontFamily": "'Hack Nerd Font', 'Noto Sans Mono CJK SC', 'Noto Emoji'"
 }
 ```
 
@@ -534,6 +537,13 @@ return config
 ```json
 {
     "terminal.integrated.sendKeybindingsToShell": true
+}
+```
+
+### 关闭“辅助视图”
+```json
+{
+    "terminal.integrated.accessibleViewFocusOnCommandExecution": false
 }
 ```
 
