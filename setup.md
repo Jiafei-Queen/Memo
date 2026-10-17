@@ -107,6 +107,10 @@ if has('gui_running')
     set columns=100
 endif
 
+" 隐藏工具栏
+set guioptions-=m
+" 隐藏菜单栏
+set guioptions-=T
 ```
 
 然后打开 Vim，输入 `:PlugInstall` 就行
